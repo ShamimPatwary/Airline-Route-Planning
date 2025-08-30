@@ -1,0 +1,20 @@
+<h2>Manage Routes</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Route</button>
+</form>
+
+<h3>Existing Routes</h3>
+<ul>
+    {% for route in routes %}
+        <li>
+            {{ route.origin.code }} → {{ route.destination.code }}
+            {% if route.distance %}({{ route.distance }} km){% endif %}
+            <a href="{% url 'delete_route' route.id %}">Delete</a>
+        </li>
+    {% empty %}
+        <li>No routes available.</li>
+    {% endfor %}
+</ul>
+<a href="/">← Back</a>

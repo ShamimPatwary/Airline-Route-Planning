@@ -1,0 +1,16 @@
+<h2>Manage Airports</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Airport</button>
+</form>
+
+<h3>Existing Airports</h3>
+<ul>
+    {% for airport in airports %}
+        <li>{{ airport.name }} ({{ airport.code }})
+            <a href="{% url 'delete_airport' airport.code %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="/">← Back</a>

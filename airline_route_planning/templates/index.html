@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airline Route Planner</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+</head>
+<body>
+    <h1>Airline Route Planner</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <select name="from">
+            {% for airport in airports %}
+                <option value="{{ airport.code }}">{{ airport.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="to">
+            {% for airport in airports %}
+                <option value="{{ airport.code }}">{{ airport.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Find Route</button>
+    </form>
+
+    <p>
+        <a href="{% url 'manage_airports' %}">Manage Airports</a> |
+        <a href="{% url 'manage_routes' %}">Manage Routes</a>
+    </p>
+
+    {% if path %}
+        <h3>Shortest Route:</h3>
+        <p>{{ path|join:" → " }}</p>
+    {% elif path is not None %}
+        <p>No route found.</p>
+    {% endif %}
+
+</body>
+</html>
